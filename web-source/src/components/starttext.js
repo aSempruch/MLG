@@ -8,7 +8,7 @@ export default class StartText extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        this.setState({text: this.getText(nextProps.gameState())});
+        this.setState({text: this.getText(nextProps.gameState)});
     }
 
     componentWillMount(){
@@ -17,16 +17,14 @@ export default class StartText extends Component {
 
     getText = (gameState) => {
         switch(gameState){
-            case 1: return 'Mouse Here'
-            case 2: return 'Click to Start'
+            case 0: return 'Move Your Mouse Here'
+            case 1: return 'Click to Start'
             default: return ''
         }
     }
 
     render() {
         const { text } = this.state;
-        const gameState = this.props.gameState()
-        if(gameState === 1 || gameState === 2)
         return (
             <Text
                 text={text}
@@ -36,6 +34,5 @@ export default class StartText extends Component {
                 offsetY={50}
             />
         )
-        else return null;
   }
 }

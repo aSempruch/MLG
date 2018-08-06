@@ -7,21 +7,19 @@ import { Stage, Layer } from 'react-konva';
 class App extends Component {
 
   state = {
-    gameState: 1,
+    gameState: 0,
   }
 
-  gameState = (val) => {
-      if(val) return this.setState({gameState: val});
-      else return this.state.gameState;
+  setGameState = (val) => {
+    this.setState({gameState: val});
   }
 
   render() {
-    const { gameState } = this;
     return (
       <Stage width={window.innerWidth} height={window.innerHeight}>
         <Layer>
-          <StartText gameState={gameState}/>
-          <Target gameState={gameState}/>
+          <StartText gameState={this.state.gameState}/>
+          <Target gameState={this.state.gameState}/>
         </Layer>
       </Stage>
     );
