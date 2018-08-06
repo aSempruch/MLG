@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Ring, Group } from 'react-konva';
+import { Ring } from 'react-konva';
 
 export default class idleAnim extends Component {
 
@@ -18,13 +18,13 @@ export default class idleAnim extends Component {
         switch(gameState){
             case 2:
                 if(size > 30)
-                    nextSize = size-0.5
+                    nextSize = size-1
                 else
                     nextSize = maxSize
                 break;
             case 1:
                 if(size < maxSize)
-                    nextSize = size+0.5
+                    nextSize = size+0.7
                 else
                     nextSize = 30
                 break;
@@ -40,31 +40,21 @@ export default class idleAnim extends Component {
         setInterval(this.animate, 14)
     }
 
-    // getOpacity = () => {
-    //     const { size } = this.state;
-    //     var maxSize = this.maxSize;
-    //     // if(this.props.gameState() !== 1)
-    //     //     maxSize = maxSize * 0.4
-    //     return 0.5 - (Math.abs(0.5 - (size / (maxSize))))
-    // }
-
     render() {
         const { size } = this.state;
         const maxSize = this.maxSize;
         const gameState = this.props.gameState()
         if(gameState === 1 || gameState === 2)
             return (
-                <Group>
-                    <Ring
-                        x={window.innerWidth / 2}
-                        y={window.innerHeight / 2}
-                        innerRadius={size-2}
-                        outerRadius={size}
-                        fill='red'
-                        shadowBlur={0}
-                        opacity={0.5 - (Math.abs(0.5 - (size / (maxSize))))}
-                    />
-                </Group>
+                <Ring
+                    x={window.innerWidth / 2}
+                    y={window.innerHeight / 2}
+                    innerRadius={size-2}
+                    outerRadius={size}
+                    fill='red'
+                    shadowBlur={0}
+                    opacity={Math.abs(0.5 - (Math.abs(0.5 - (size / (maxSize)))))}
+                />
             )
         else return null;
     }

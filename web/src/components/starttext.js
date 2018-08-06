@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from 'react-konva';
+import { Text, Layer } from 'react-konva';
 
 export default class StartText extends Component {
 
@@ -28,6 +28,7 @@ export default class StartText extends Component {
         const gameState = this.props.gameState()
         if(gameState === 1 || gameState === 2)
         return (
+            <Layer>
             <Text
                 text={text}
                 x={window.innerWidth/2}
@@ -35,6 +36,7 @@ export default class StartText extends Component {
                 offsetX={34}
                 offsetY={50}
             />
+            </Layer>
         )
         else return null;
   }

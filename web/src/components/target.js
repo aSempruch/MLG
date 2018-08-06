@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Circle, Group } from 'react-konva';
+import { Circle, Layer } from 'react-konva';
 import IdleAnim from './idleAnim';
 import Logic from '../logic';
 
@@ -38,14 +38,14 @@ export default class Target extends Component {
     render(){
       const { x, y } = this.state;
       return (
-        <Group>
+        <Layer>
           <IdleAnim gameState={this.props.gameState}/>
           <Circle
             x={x}
             y={y}
             width={60}
             height={60}
-            fill={'yellow'}
+            fill={'#FF9000'}
             shadowBlur={5}
           />
           <Circle
@@ -53,13 +53,13 @@ export default class Target extends Component {
             y={y}
             width={25}
             height={25}
-            fill={'blue'}
-            shadowBlur={2}
+            fill={'#FFB04A'}
+            shadowBlur={0}
             onMouseOver={this.startIdle}
             onMouseOut={this.stopIdle}
             onClick={this.startGame}
           />
-        </Group>
+        </Layer>
       );
     }
   }

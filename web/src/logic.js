@@ -12,7 +12,6 @@ const getDirection = () => {
 }
 
 var direction = getDirection();
-console.log(direction)
 
 // setInterval(() => {
 //     direction = getDirection()
@@ -24,10 +23,8 @@ const getX = () => {
         direction.x *= -1
     }
     else if(x <= wallX){
-        console.log(direction)
         x = wallX
         direction.x *= -1
-        console.log(direction)
     }
     x += direction.x * speed
     return x

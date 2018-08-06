@@ -3,7 +3,8 @@ import './App.css';
 import Target from './components/target';
 import StartText from './components/starttext';
 import Bounds from './components/bounds'
-import { Stage, Layer } from 'react-konva';
+import Drawing from './components/drawing'
+import { Stage } from 'react-konva';
 
 class App extends Component {
 
@@ -20,11 +21,10 @@ class App extends Component {
     const { gameState } = this;
     return (
       <Stage width={window.innerWidth} height={window.innerHeight}>
-        <Layer>
-          <StartText gameState={gameState}/>
-          <Bounds/>
-          <Target gameState={gameState}/>
-        </Layer>
+        <Bounds/>
+        <Target gameState={gameState}/>
+        <StartText gameState={gameState}/>
+        <Drawing gameState={gameState}/>
       </Stage>
     );
   }
