@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { Circle, Group } from 'react-konva';
 import IdleAnim from './idleAnim';
+import Logic from '../logic';
 
 export default class Target extends Component {
+
+    state = {
+      x: window.innerWidth/2,
+      y: window.innerHeight/2
+    }
 
     started = () => {
       return this.props.gameState() === 3
@@ -11,6 +17,12 @@ export default class Target extends Component {
     startGame = () => {
       if(this.started()) return
       this.props.gameState(3);
+      setInterval(_ => {
+        this.setState({
+          x: Logic.getX(),
+          y: Logic.getY()
+        })
+      }, 10)
     }
 
     startIdle = () => {
@@ -24,20 +36,21 @@ export default class Target extends Component {
     }
 
     render(){
+      const { x, y } = this.state;
       return (
         <Group>
           <IdleAnim gameState={this.props.gameState}/>
           <Circle
-            x={window.innerWidth/2}
-            y={window.innerHeight/2}
+            x={x}
+            y={y}
             width={60}
             height={60}
             fill={'yellow'}
             shadowBlur={5}
           />
           <Circle
-            x={window.innerWidth/2}
-            y={window.innerHeight/2}
+            x={x}
+            y={y}
             width={25}
             height={25}
             fill={'blue'}
