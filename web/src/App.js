@@ -10,6 +10,7 @@ class App extends Component {
 
   state = {
     gameState: 1,
+    mousePos: []
   }
 
   gameState = (val) => {
@@ -17,14 +18,23 @@ class App extends Component {
       else return this.state.gameState;
   }
 
+  setMousePos = (e) => {
+    const { clientX, clientY } = e.evt;
+    this.setState({mousePos: [clientX,clientY]})
+  }
+
+  getMousePos = () => {
+    return this.state.mousePos
+  }
+
   render() {
-    const { gameState } = this;
+    const { gameState, setMousePos, getMousePos } = this;
     return (
       <Stage width={window.innerWidth} height={window.innerHeight}>
         <Bounds/>
-        <Target gameState={gameState}/>
+        <Drawing gameState={gameState} setMousePos={setMousePos} getMousePos={getMousePos}/>
+        <Target gameState={gameState} setMousePos={setMousePos} getMousePos={getMousePos}/>
         <StartText gameState={gameState}/>
-        <Drawing gameState={gameState}/>
       </Stage>
     );
   }

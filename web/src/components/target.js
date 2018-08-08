@@ -46,6 +46,7 @@ export default class Target extends Component {
             width={60}
             height={60}
             fill={'#FF9000'}
+            onMouseMove={this.props.setMousePos}
             shadowBlur={5}
           />
           <Circle
@@ -57,6 +58,7 @@ export default class Target extends Component {
             shadowBlur={0}
             onMouseOver={this.startIdle}
             onMouseOut={this.stopIdle}
+            onMouseMove={this.props.setMousePos}
             onClick={this.startGame}
           />
         </Layer>
