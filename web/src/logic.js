@@ -1,7 +1,7 @@
 var x = window.innerWidth/2, y = window.innerHeight/2
 const width = 400, height = 400
 const wallX = x-width/2, wallY = y-height/2
-const speed = 1.5
+const speed = 0.5
 
 const getDirection = () => {
     var x = Math.random()*2-1
@@ -13,9 +13,9 @@ const getDirection = () => {
 
 var direction = getDirection();
 
-// setInterval(() => {
-//     direction = getDirection()
-// }, 4000)
+setInterval(() => {
+    direction = getDirection()
+}, 4000)
 
 const getX = () => {
     if(x >= wallX + width){

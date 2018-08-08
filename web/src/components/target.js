@@ -7,7 +7,8 @@ export default class Target extends Component {
 
     state = {
       x: window.innerWidth/2,
-      y: window.innerHeight/2
+      y: window.innerHeight/2,
+      shadow1: 0
     }
 
     started = () => {
@@ -35,8 +36,15 @@ export default class Target extends Component {
       this.props.gameState(1);
     }
 
+    highLight = (val) => {
+      if(val)
+        this.setState({shadow1: 5})
+      else
+        this.setState({shadow1: 0})
+    }
+
     render(){
-      const { x, y } = this.state;
+      const { x, y, shadow1 } = this.state;
       return (
         <Layer>
           <IdleAnim gameState={this.props.gameState}/>
@@ -55,9 +63,9 @@ export default class Target extends Component {
             width={25}
             height={25}
             fill={'#FFB04A'}
-            shadowBlur={0}
-            onMouseOver={this.startIdle}
-            onMouseOut={this.stopIdle}
+            shadowBlur={shadow1}
+            onMouseOver={_ => {this.startIdle();this.highLight(true)}}
+            onMouseOut={_ => {this.stopIdle();this.highLight(false)}}
             onMouseMove={this.props.setMousePos}
             onClick={this.startGame}
           />

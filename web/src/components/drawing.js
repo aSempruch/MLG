@@ -3,7 +3,7 @@ import { Layer, Line, Rect } from 'react-konva'
 import { getHeight, getWidth, getX, getY } from '../logic'
 
 const   xShift = (window.innerWidth-getWidth())/2,
-        yShift=(window.innerWidth-getWidth())/2
+        yShift=(window.innerHeight-getWidth())/2
 
 export default class Drawing extends Component {
 
@@ -17,24 +17,26 @@ export default class Drawing extends Component {
         if(this.props.gameState() !== 3) return
         const pos = this.props.getMousePos()
         const { points } = this.state
-        if(pos[0] !== points[points.length-2] && pos[1] !== points[points.length-1])
+        if(pos[0]-xShift !== points[points.length-2] && pos[1]-yShift !== points[points.length-1])
             this.setState({
-                points: [...points.splice(points.length-1000, points.length) , pos[0]-xShift, pos[1]-yShift]
+                points: [...points.slice(points.length-300, points.length) , pos[0]-xShift, pos[1]-yShift]
             })
+        
     }
 
     componentWillReceiveProps(n){
         if(n.gameState() !== 3) return
         if(!this.state.started){
-            this.startBallTracking(50)
+            this.startBallTracking(10)
             this.setState({started: true})
         }
     }
 
     startBallTracking(interval){
         setInterval(_ => {
+            const { ballPoints } = this.state
             this.setState({
-                ballPoints: [...this.state.ballPoints, getX()-xShift, getY()-yShift]
+                ballPoints: [...ballPoints.slice(ballPoints.length-500, ballPoints.length), getX()-xShift, getY()-yShift]
             })
             this.updateDrawing()
         }, interval)
@@ -51,10 +53,11 @@ export default class Drawing extends Component {
                         y={yShift}
                         stroke='orange'
                         strokeWidth={60}
-                        opacity={0.2}
+                        opacity={0.5}
                         points={ballPoints}
                         width={10}
                         shadowBlur={1}
+                        tension
                     />
                     <Line
                         perfectDrawEnabled={false}
@@ -62,25 +65,26 @@ export default class Drawing extends Component {
                         y={yShift}
                         stroke='orange'
                         strokeWidth={25}
-                        opacity={0.4}
+                        opacity={1}
                         points={ballPoints}
                         width={10}
                         shadowBlur={1}
+                        tension
                     />
                     <Line
-                        perfectDrawEnabled={false}
                         x={xShift}
                         y={yShift}
-                        stroke='#64aadb'
-                        strokeWidth={8}
-                        opacity={1}
+                        stroke='orange'
+                        strokeWidth={20}
+                        opacity={0.1}
                         points={points}
                         width={10}
-                        shadowBlur={1}
+                        shadowBlur={50}
+                        tension={50}
                     />
                     <Rect
                         x={xShift-30}
-                        y={xShift-30}
+                        y={yShift-30}
                         height={getHeight()+60}
                         width={getWidth()+60}
                         onMouseMove={this.props.setMousePos}

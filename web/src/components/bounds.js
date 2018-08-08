@@ -12,7 +12,7 @@ export default class Bounds extends Component {
         y={window.innerHeight/2-height/2-30}
         height={height+60}
         width={width+60}
-        fill='#479AD4'
+        fill='white'
         stroke='#053D64'
         strokeWidth={2}
       />

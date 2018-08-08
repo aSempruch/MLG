@@ -36,6 +36,8 @@ export default class idleAnim extends Component {
         });
     }
 
+    // TODO: Clear Timer on unmount
+
     componentDidMount() {
         setInterval(this.animate, 14)
     }
