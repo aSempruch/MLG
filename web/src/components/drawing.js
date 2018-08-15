@@ -11,6 +11,7 @@ export default class Drawing extends Component {
         points: [],
         ballPoints: [],
         started: false,
+        interval: undefined
     }
 
     updateDrawing = () => {
@@ -25,21 +26,29 @@ export default class Drawing extends Component {
     }
 
     componentWillReceiveProps(n){
-        if(n.gameState() !== 3) return
-        if(!this.state.started){
-            this.startBallTracking(10)
-            this.setState({started: true})
+        const gameState = n.gameState()
+        if(gameState === 3){
+            if(!this.state.started){
+                this.startBallTracking(10)
+                this.setState({started: true})
+            }
+        }
+        if(gameState === 4){
+            clearInterval(this.state.interval)
         }
     }
 
     startBallTracking(interval){
-        setInterval(_ => {
+        var timer = setInterval(_ => {
             const { ballPoints } = this.state
             this.setState({
                 ballPoints: [...ballPoints.slice(ballPoints.length-500, ballPoints.length), getX()-xShift, getY()-yShift]
             })
             this.updateDrawing()
         }, interval)
+        this.setState({
+            interval: timer
+        })
     }
 
     render() {
@@ -80,7 +89,7 @@ export default class Drawing extends Component {
                         points={points}
                         width={10}
                         shadowBlur={50}
-                        tension={50}
+                        tension={3}
                     />
                     <Rect
                         x={xShift-30}

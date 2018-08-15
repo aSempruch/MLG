@@ -8,7 +8,18 @@ export default class Target extends Component {
     state = {
       x: window.innerWidth/2,
       y: window.innerHeight/2,
-      shadow1: 0
+      shadow1: 0,
+      gameTimer: undefined
+    }
+
+    componentWillReceiveProps(n){
+      if(n.gameState() === 4){
+        clearInterval(this.state.gameTimer)
+        this.setState({
+          x: window.innerWidth/2,
+          y: window.innerHeight/2
+        })
+      }
     }
 
     started = () => {
@@ -18,12 +29,15 @@ export default class Target extends Component {
     startGame = () => {
       if(this.started()) return
       this.props.gameState(3);
-      setInterval(_ => {
+      var timer = setInterval(_ => {
         this.setState({
           x: Logic.getX(),
           y: Logic.getY()
         })
       }, 10)
+      this.setState({
+        gameTimer: timer
+      })
     }
 
     startIdle = () => {

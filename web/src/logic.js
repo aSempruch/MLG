@@ -3,6 +3,8 @@ const width = 400, height = 400
 const wallX = x-width/2, wallY = y-height/2
 const speed = 0.5
 
+var mouseData = []
+
 const getDirection = () => {
     var x = Math.random()*2-1
     var y
@@ -13,9 +15,18 @@ const getDirection = () => {
 
 var direction = getDirection();
 
+/* Randomize Ball Direction */
 setInterval(() => {
     direction = getDirection()
 }, 4000)
+
+/* Collect Mouse Data */
+const collectMouseData = (mouseX, mouseY) => {
+    mouseData.push([
+        x - mouseX,
+        y - mouseY
+    ])
+}
 
 const getX = () => {
     if(x >= wallX + width){
@@ -47,5 +58,6 @@ module.exports = {
     getX: getX,
     getY: getY,
     getWidth: () => {return width},
-    getHeight: () => {return height}
+    getHeight: () => {return height},
+    collectMouseData: collectMouseData
 }

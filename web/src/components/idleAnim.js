@@ -6,7 +6,9 @@ export default class idleAnim extends Component {
     maxSize = 100;
 
     state = {
-        size: this.maxSize
+        size: this.maxSize,
+        interval: undefined,
+        started: false
     }
 
     animate = () => {
@@ -39,7 +41,24 @@ export default class idleAnim extends Component {
     // TODO: Clear Timer on unmount
 
     componentDidMount() {
-        setInterval(this.animate, 14)
+        const timer = setInterval(this.animate, 14)
+        this.setState({interval: timer})
+    }
+
+    componentWillReceiveProps(n){
+        if(this.state.started) return
+        const gameState = n.gameState()
+        switch(gameState){
+            case 3:
+                this.setState({
+                    started: true,
+                    size: 10
+                })
+                clearInterval(this.state.interval)
+                break
+            default:
+                return
+        }
     }
 
     render() {
