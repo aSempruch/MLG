@@ -23,9 +23,21 @@ setInterval(() => {
 /* Collect Mouse Data */
 const collectMouseData = (mouseX, mouseY) => {
     mouseData.push([
-        x - mouseX,
-        y - mouseY
+        Math.round((x - mouseX)*100),
+        Math.round((y - mouseY)*100)
     ])
+}
+
+/* Submit Mouse Data to Backend Server */
+const submitData = () => {
+    fetch('http://localhost:4000/classify', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(mouseData)
+    })
 }
 
 const getX = () => {
@@ -59,5 +71,6 @@ module.exports = {
     getY: getY,
     getWidth: () => {return width},
     getHeight: () => {return height},
-    collectMouseData: collectMouseData
+    collectMouseData: collectMouseData,
+    submitData: submitData
 }

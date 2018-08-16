@@ -5,8 +5,9 @@ import StartText from './components/starttext'
 import Bounds from './components/bounds'
 import Drawing from './components/drawing'
 import Timer from './components/timer'
+import GameMenu from './components/gamemenu'
 import { Stage } from 'react-konva'
-import { collectMouseData } from './logic'
+import { collectMouseData, submitData } from './logic'
 
 class App extends Component {
 
@@ -16,7 +17,11 @@ class App extends Component {
   }
 
   gameState = (val) => {
-      if(val) return this.setState({gameState: val});
+      if(val){
+        if(val === 4)
+          submitData()
+        return this.setState({gameState: val});
+      }
       else return this.state.gameState;
   }
 
@@ -33,6 +38,7 @@ class App extends Component {
   render() {
     const { gameState, setMousePos, getMousePos } = this;
     return (
+      <div>
       <Stage width={window.innerWidth} height={window.innerHeight}>
         <Bounds/>
         <Drawing gameState={gameState} setMousePos={setMousePos} getMousePos={getMousePos}/>
@@ -40,6 +46,8 @@ class App extends Component {
         <StartText gameState={gameState}/>
         <Timer gameState={gameState}/>
       </Stage>
+      <GameMenu gameState={gameState}/>
+      </div>
     );
   }
 }

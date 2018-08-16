@@ -5,7 +5,8 @@ export default class Timer extends Component {
 
     state = {
         time: 20,
-        started: false
+        started: false,
+        interval: undefined
     }
 
     componentWillReceiveProps(n){
@@ -16,13 +17,18 @@ export default class Timer extends Component {
     }
 
     startTimer = () => {
-        setInterval(_ => {
+        const interval = setInterval(_ => {
             const { time } = this.state
-            if(time < 1)
+            if(time < 1){
                 this.props.gameState(4)
+                clearInterval(this.state.interval)
+            }
             else
                 this.setState({time: time-1})
         }, 1000)
+        this.setState({
+            interval: interval
+        })
     }
 
     render() {
