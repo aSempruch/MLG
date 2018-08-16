@@ -7,7 +7,19 @@ export default class Target extends Component {
 
     state = {
       x: window.innerWidth/2,
-      y: window.innerHeight/2
+      y: window.innerHeight/2,
+      shadow1: 0,
+      gameTimer: undefined
+    }
+
+    componentWillReceiveProps(n){
+      if(n.gameState() === 4){
+        clearInterval(this.state.gameTimer)
+        this.setState({
+          x: window.innerWidth/2,
+          y: window.innerHeight/2
+        })
+      }
     }
 
     started = () => {
@@ -17,12 +29,15 @@ export default class Target extends Component {
     startGame = () => {
       if(this.started()) return
       this.props.gameState(3);
-      setInterval(_ => {
+      var timer = setInterval(_ => {
         this.setState({
           x: Logic.getX(),
           y: Logic.getY()
         })
       }, 10)
+      this.setState({
+        gameTimer: timer
+      })
     }
 
     startIdle = () => {
@@ -35,8 +50,15 @@ export default class Target extends Component {
       this.props.gameState(1);
     }
 
+    highLight = (val) => {
+      if(val)
+        this.setState({shadow1: 5})
+      else
+        this.setState({shadow1: 0})
+    }
+
     render(){
-      const { x, y } = this.state;
+      const { x, y, shadow1 } = this.state;
       return (
         <Layer>
           <IdleAnim gameState={this.props.gameState}/>
@@ -46,6 +68,7 @@ export default class Target extends Component {
             width={60}
             height={60}
             fill={'#FF9000'}
+            onMouseMove={this.props.setMousePos}
             shadowBlur={5}
           />
           <Circle
@@ -54,9 +77,10 @@ export default class Target extends Component {
             width={25}
             height={25}
             fill={'#FFB04A'}
-            shadowBlur={0}
-            onMouseOver={this.startIdle}
-            onMouseOut={this.stopIdle}
+            shadowBlur={shadow1}
+            onMouseOver={_ => {this.startIdle();this.highLight(true)}}
+            onMouseOut={_ => {this.stopIdle();this.highLight(false)}}
+            onMouseMove={this.props.setMousePos}
             onClick={this.startGame}
           />
         </Layer>

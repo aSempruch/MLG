@@ -3,36 +3,52 @@ import { Layer, Line, Rect } from 'react-konva'
 import { getHeight, getWidth, getX, getY } from '../logic'
 
 const   xShift = (window.innerWidth-getWidth())/2,
-        yShift=(window.innerWidth-getWidth())/2
-
-var iterator = 0;
+        yShift=(window.innerHeight-getWidth())/2
 
 export default class Drawing extends Component {
 
     state = {
         points: [],
         ballPoints: [],
+        started: false,
+        interval: undefined
     }
 
-    updateDrawing = (e) => {
+    updateDrawing = () => {
         if(this.props.gameState() !== 3) return
-        if(iterator-- > 0) return
-        iterator = 3
-        const { clientX, clientY } = e.evt
+        const pos = this.props.getMousePos()
         const { points } = this.state
-        if(clientX !== points[points.length-2] && clientY !== points[points.length-1])
+        if(pos[0]-xShift !== points[points.length-2] && pos[1]-yShift !== points[points.length-1])
             this.setState({
-                points: [...points.splice(points.length-1000, points.length) , clientX-xShift, clientY-yShift]
+                points: [...points.slice(points.length-300, points.length) , pos[0]-xShift, pos[1]-yShift]
             })
+        
     }
 
     componentWillReceiveProps(n){
-        if(n.gameState() !== 3) return
-        setInterval(_ => {
+        const gameState = n.gameState()
+        if(gameState === 3){
+            if(!this.state.started){
+                this.startBallTracking(10)
+                this.setState({started: true})
+            }
+        }
+        if(gameState === 4){
+            clearInterval(this.state.interval)
+        }
+    }
+
+    startBallTracking(interval){
+        var timer = setInterval(_ => {
+            const { ballPoints } = this.state
             this.setState({
-                ballPoints: [...this.state.ballPoints, getX()-xShift, getY()-yShift]
+                ballPoints: [...ballPoints.slice(ballPoints.length-500, ballPoints.length), getX()-xShift, getY()-yShift]
             })
-        }, 50)
+            this.updateDrawing()
+        }, interval)
+        this.setState({
+            interval: timer
+        })
     }
 
     render() {
@@ -45,23 +61,42 @@ export default class Drawing extends Component {
                         x={xShift}
                         y={yShift}
                         stroke='orange'
+                        strokeWidth={60}
+                        opacity={0.5}
                         points={ballPoints}
                         width={10}
+                        shadowBlur={1}
+                        tension
                     />
                     <Line
                         perfectDrawEnabled={false}
                         x={xShift}
                         y={yShift}
-                        stroke='#64aadb'
+                        stroke='orange'
+                        strokeWidth={25}
+                        opacity={1}
+                        points={ballPoints}
+                        width={10}
+                        shadowBlur={1}
+                        tension
+                    />
+                    <Line
+                        x={xShift}
+                        y={yShift}
+                        stroke='orange'
+                        strokeWidth={20}
+                        opacity={0.1}
                         points={points}
                         width={10}
+                        shadowBlur={50}
+                        tension={3}
                     />
                     <Rect
                         x={xShift-30}
-                        y={xShift-30}
+                        y={yShift-30}
                         height={getHeight()+60}
                         width={getWidth()+60}
-                        onMouseMove={this.updateDrawing}
+                        onMouseMove={this.props.setMousePos}
                     />
                 </Layer>
             )
