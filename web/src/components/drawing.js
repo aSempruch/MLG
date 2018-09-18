@@ -20,7 +20,7 @@ export default class Drawing extends Component {
         const { points } = this.state
         if(pos[0]-xShift !== points[points.length-2] && pos[1]-yShift !== points[points.length-1])
             this.setState({
-                points: [...points.slice(points.length-300, points.length) , pos[0]-xShift, pos[1]-yShift]
+                points: [...points.slice(points.length-100, points.length) , pos[0]-xShift, pos[1]-yShift]
             })
         
     }
@@ -29,7 +29,7 @@ export default class Drawing extends Component {
         const gameState = n.gameState()
         if(gameState === 3){
             if(!this.state.started){
-                this.startBallTracking(10)
+                this.startBallTracking(25)
                 this.setState({started: true})
             }
         }
@@ -43,7 +43,7 @@ export default class Drawing extends Component {
             const { ballPoints } = this.state
             const { x, y } = this.props
             this.setState({
-                ballPoints: [...ballPoints.slice(ballPoints.length-500, ballPoints.length), x-xShift, y-yShift]
+                ballPoints: [...ballPoints.slice(ballPoints.length-200, ballPoints.length), x-xShift, y-yShift]
             })
             this.updateDrawing()
         }, interval)
@@ -90,7 +90,7 @@ export default class Drawing extends Component {
                         points={points}
                         width={10}
                         shadowBlur={50}
-                        tension={3}
+                        tension={1}
                     />
                     <Rect
                         x={xShift-30}

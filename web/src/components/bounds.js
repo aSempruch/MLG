@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { Rect, Group } from 'react-konva'
-import { getHeight, getWidth } from '../logic'
+import { height, width } from '../constants'
 
 export default class Bounds extends Component {
   render() {
-    const height = getHeight(), width = getWidth();
     return (
       <Group>
       <Rect

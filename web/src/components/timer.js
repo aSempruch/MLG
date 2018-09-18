@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { Layer, Text } from 'react-konva'
+import { totalGameTime } from '../constants'
 
 export default class Timer extends Component {
 
     state = {
-        time: 3,
+        time: totalGameTime,
         started: false,
         interval: undefined
     }

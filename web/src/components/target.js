@@ -5,20 +5,7 @@ import IdleAnim from './idleAnim';
 export default class Target extends Component {
 
     state = {
-      x: window.innerWidth/2,
-      y: window.innerHeight/2,
       shadow1: 0,
-      gameTimer: undefined
-    }
-
-    componentWillReceiveProps(n){
-      if(n.gameState() === 4){
-        clearInterval(this.state.gameTimer)
-        this.setState({
-          x: window.innerWidth/2,
-          y: window.innerHeight/2
-        })
-      }
     }
 
     started = () => {
@@ -48,8 +35,9 @@ export default class Target extends Component {
     }
 
     render(){
-      const { shadow1 } = this.state;
+      const { shadow1 } = this.state
       const { x, y } = this.props
+
       return (
         <Group>
           <IdleAnim gameState={this.props.gameState}/>
