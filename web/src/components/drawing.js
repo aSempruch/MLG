@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Layer, Line, Rect } from 'react-konva'
-import { getHeight, getWidth, getX, getY } from '../logic'
+import { Group, Line, Rect } from 'react-konva'
+import { height, width } from '../constants'
 
-const   xShift = (window.innerWidth-getWidth())/2,
-        yShift=(window.innerHeight-getWidth())/2
+const   xShift = (window.innerWidth-width)/2,
+        yShift=(window.innerHeight-height)/2
 
 export default class Drawing extends Component {
 
@@ -41,8 +41,9 @@ export default class Drawing extends Component {
     startBallTracking(interval){
         var timer = setInterval(_ => {
             const { ballPoints } = this.state
+            const { x, y } = this.props
             this.setState({
-                ballPoints: [...ballPoints.slice(ballPoints.length-500, ballPoints.length), getX()-xShift, getY()-yShift]
+                ballPoints: [...ballPoints.slice(ballPoints.length-500, ballPoints.length), x-xShift, y-yShift]
             })
             this.updateDrawing()
         }, interval)
@@ -55,7 +56,7 @@ export default class Drawing extends Component {
         const { points, ballPoints } = this.state;
         if(this.props.gameState() === 3)
             return (
-                <Layer>
+                <Group>
                     <Line
                         perfectDrawEnabled={false}
                         x={xShift}
@@ -94,11 +95,11 @@ export default class Drawing extends Component {
                     <Rect
                         x={xShift-30}
                         y={yShift-30}
-                        height={getHeight()+60}
-                        width={getWidth()+60}
+                        height={height+60}
+                        width={width+60}
                         onMouseMove={this.props.setMousePos}
                     />
-                </Layer>
+                </Group>
             )
         else return null
     }

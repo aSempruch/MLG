@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import Target from './components/target'
-import StartText from './components/starttext'
-import Bounds from './components/bounds'
-import Drawing from './components/drawing'
-import Timer from './components/timer'
-import GameMenu from './components/gamemenu'
+import { MovingComponents, StartText, Timer, GameMenu } from './components'
 import { Stage } from 'react-konva'
 import { collectMouseData, submitData } from './logic'
 
@@ -13,7 +8,7 @@ class App extends Component {
 
   state = {
     gameState: 1,
-    mousePos: []
+    mousePos: [],
   }
 
   gameState = (val) => {
@@ -36,13 +31,15 @@ class App extends Component {
   }
 
   render() {
-    const { gameState, setMousePos, getMousePos } = this;
+    const { gameState, setMousePos, getMousePos } = this
     return (
       <div>
       <Stage width={window.innerWidth} height={window.innerHeight}>
-        <Bounds/>
-        <Drawing gameState={gameState} setMousePos={setMousePos} getMousePos={getMousePos}/>
-        <Target gameState={gameState} setMousePos={setMousePos} getMousePos={getMousePos}/>
+        <MovingComponents
+          gameState={gameState}
+          setMousePos={setMousePos}
+          getMousePos={getMousePos}
+        />
         <StartText gameState={gameState}/>
         <Timer gameState={gameState}/>
       </Stage>

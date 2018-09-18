@@ -4,7 +4,7 @@ import { Layer, Text } from 'react-konva'
 export default class Timer extends Component {
 
     state = {
-        time: 20,
+        time: 3,
         started: false,
         interval: undefined
     }

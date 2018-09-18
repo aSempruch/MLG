@@ -12,8 +12,7 @@ app.use((req, res, next) => {
 app.use( bodyParser.json() )
 
 app.post('/classify', (req, res) => {
-    console.log(req.body)
-    res.send(engine.classify(req.body, 'alcohol'))
+    res.json({result: engine.classify(req.body, 'alcohol')})
 })
 
 app.listen(4000, _ => {
