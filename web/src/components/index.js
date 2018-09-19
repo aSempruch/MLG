@@ -6,6 +6,7 @@ import MovingComponents from './movingComponents'
 import StartText from './starttext'
 import Target from './target'
 import Timer from './timer'
+import Information from './information'
 
 export {
     Bounds,
@@ -15,5 +16,6 @@ export {
     MovingComponents,
     StartText,
     Target,
-    Timer
+    Timer,
+    Information
 }

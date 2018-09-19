@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Circle, Group } from 'react-konva';
 import IdleAnim from './idleAnim';
+import { TARGET_INNER_COLOR, TARGET_OUTER_COLOR, TARGET_INNER_SIZE, TARGET_OUTER_SIZE } from '../constants'
 
 export default class Target extends Component {
 
@@ -44,18 +45,16 @@ export default class Target extends Component {
           <Circle
             x={x}
             y={y}
-            width={60}
-            height={60}
-            fill={'#FF9000'}
+            radius={TARGET_OUTER_SIZE / 2}
+            fill={TARGET_OUTER_COLOR}
             onMouseMove={this.props.setMousePos}
             shadowBlur={5}
           />
           <Circle
             x={x}
             y={y}
-            width={25}
-            height={25}
-            fill={'#FFB04A'}
+            radius={TARGET_INNER_SIZE / 2}
+            fill={TARGET_INNER_COLOR}
             shadowBlur={shadow1}
             onMouseOver={_ => {this.startIdle();this.highLight(true)}}
             onMouseOut={_ => {this.stopIdle();this.highLight(false)}}

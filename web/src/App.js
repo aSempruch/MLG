@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import { MovingComponents, StartText, Timer, GameMenu } from './components'
+import { MovingComponents, StartText, Timer, GameMenu, Information } from './components'
 import { Stage } from 'react-konva'
 import { wallX, wallY, width, height, speed } from './constants'
 
@@ -14,6 +14,8 @@ class App extends Component {
     gameState: 1,
     mousePos: [],
   }
+
+  mouseData = []
 
   gameState = (val) => {
     if(val){
@@ -29,6 +31,8 @@ class App extends Component {
   setMousePos = (e) => {
     const { clientX, clientY } = e.evt;
     this.setState({mousePos: [clientX,clientY]})
+    if(this.state.gameState === 3)
+      this.mouseData.push([clientX, clientY])
   }
 
   getMousePos = () => {
@@ -67,6 +71,12 @@ class App extends Component {
         />
         <StartText gameState={gameState}/>
         <Timer gameState={gameState}/>
+        <Information 
+          gameState={gameState} 
+          mousePos={this.state.mousePos}
+          x={x}
+          y={y}
+        />
       </Stage>
       <GameMenu gameState={gameState}/>
       </div>

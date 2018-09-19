@@ -1,7 +1,20 @@
-const width = 400, height = 400
-const wallX = window.innerWidth/2-width/2, wallY = window.innerHeight/2-height/2
+// Play Area
+const width = 400
+const height = 400
+const wallX = window.innerWidth/2-width/2
+const wallY = window.innerHeight/2-height/2
+
+// Game Behavior
 const speed = 0.9
 const totalGameTime = 10
+
+// Target Size
+const TARGET_OUTER_SIZE = 60
+const TARGET_INNER_SIZE = 25
+
+// Colors
+const TARGET_INNER_COLOR = "#FFB04A"
+const TARGET_OUTER_COLOR = "#FF9000"
 
 export {
     width,
@@ -9,5 +22,9 @@ export {
     wallX,
     wallY,
     speed,
-    totalGameTime
+    totalGameTime,
+    TARGET_INNER_COLOR,
+    TARGET_OUTER_COLOR,
+    TARGET_INNER_SIZE,
+    TARGET_OUTER_SIZE
 }
