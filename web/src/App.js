@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import { MovingComponents, StartText, Timer, GameMenu, Information } from './components'
 import { Stage } from 'react-konva'
-import { wallX, wallY, width, height, speed } from './constants'
+import { wallX, wallY, width, height, speed, RANDOM_INTERVAL } from './constants'
 
 class App extends Component {
 
@@ -12,6 +12,7 @@ class App extends Component {
     direction: getDirection(),
     gameTimer: undefined,
     gameState: 1,
+    randomTimer: undefined,
     mousePos: [],
   }
 
@@ -39,21 +40,37 @@ class App extends Component {
     return this.state.mousePos
   }
 
+  randomizeDirection = () => {
+    setTimeout(() => {
+      this.setState({
+        direction: getDirection()
+      })
+    }, Math.random() * RANDOM_INTERVAL)
+  }
+
   startGame = () => {
+
     var timer = setInterval(_ => {
       this.setState({
         x: getX(this.state.x, this.state.direction),
         y: getY(this.state.y, this.state.direction)
       })
     }, 10)
+
+    var randomTimer = setInterval(_ => {
+      this.randomizeDirection()
+    }, RANDOM_INTERVAL + 100)
+    
     this.setState({
       started: true,
-      gameTimer: timer
+      gameTimer: timer,
+      randomTimer: randomTimer
     })
   }
 
   stopGame = () => {
       clearInterval(this.state.gameTimer)
+      clearInterval(this.state.randomTimer)
   }
 
   render() {

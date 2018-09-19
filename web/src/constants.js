@@ -7,6 +7,7 @@ const wallY = window.innerHeight/2-height/2
 // Game Behavior
 const speed = 0.9
 const totalGameTime = 10
+const RANDOM_INTERVAL = 5000
 
 // Target Size
 const TARGET_OUTER_SIZE = 60
@@ -26,5 +27,6 @@ export {
     TARGET_INNER_COLOR,
     TARGET_OUTER_COLOR,
     TARGET_INNER_SIZE,
-    TARGET_OUTER_SIZE
+    TARGET_OUTER_SIZE,
+    RANDOM_INTERVAL
 }

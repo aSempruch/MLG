@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Layer, Text } from 'react-konva'
-import { totalGameTime } from '../constants'
+import { totalGameTime, height } from '../constants'
 
 export default class Timer extends Component {
 
@@ -38,7 +38,7 @@ export default class Timer extends Component {
             <Layer>
                 <Text
                     x={window.innerWidth/2-10}
-                    y={window.innerHeight/2-270}
+                    y={window.innerHeight/2-height+100}
                     fontSize={40}
                     text={time}
                 />
